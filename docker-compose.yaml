@@ -1,0 +1,23 @@
+version: '2'
+services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8089:80"
+    links:
+      - db
+
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+
+  apache:
+    build: .
+    ports:
+      - "8090:80"
+    volumes:
+      - ./html:/var/www
+      - ./html:/usr/local/apache2/htdocs
+    links:
+      - db
